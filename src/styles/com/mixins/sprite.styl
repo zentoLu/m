@@ -1,0 +1,16 @@
+// sprite('img/sprite-50.png', 50, 10, 3)
+sprite($img, $grid, $x, $y) {
+    .icon-{$grid}-{$x}-{$y} {
+        width: ($grid)px
+        height: ($grid)px
+        background: unquote( 'url('+ $img +') no-repeat' )
+    }
+    for $i in 1..$x {
+        for $j in 1..$y {
+            .icon-{$i}-{$j} {
+                @extend .icon-{$grid}-{$x}-{$y}
+                background-position: (-($i - 1) * $grid)px (-($j - 1) * $grid)px
+            }
+        }
+    }
+}

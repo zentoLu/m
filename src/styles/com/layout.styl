@@ -1,0 +1,670 @@
+// 基于640 rem系统
+// 640 ~ scale:0.64 = 18px
+@media all and (min-width:640px) {
+    html {font-size:6.4px;}
+}
+
+@media all and (max-width:639px) {
+    html {font-size:6px;}
+}
+// 360 ~ scale:0.6 = 16px
+@media all and (max-width:479px) {
+    html {font-size:5.7px;}
+}
+// 320 ~ scale:0.5 = 14px
+@media all and (max-width:359px) {
+    html {font-size:5px;}
+}
+
+body {
+    color: $baseBlack;
+    font-size: 2.8rem; font-weight: 200;
+    -webkit-text-size-adjust:none;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+a {
+    color: $baseBlue;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+    -webkit-touch-callout: none;
+    //&:visited {color:@color}
+    &:active {outline:none;}
+    span,i,b {pointer-events:none;} //点击a链接只对a本身有效，防止点击到a内部的元素
+}
+
+
+// 每个页面公共类
+.app-page {
+    flex-layout()
+    flex-vertical()
+    width: 100%;
+    position: absolute; top:0; bottom:0;
+    background: #f2f2f2;
+    backface-visibility: hidden;
+}
+
+.app-offline {
+    .app-page {
+        top: 2em;
+    }
+    .app-msg-offline {
+        position: fixed; top:0; left:0; right:0;
+        background-color: rgba(#000, .5); color: #fff;
+        padding: .5em 1em;
+        i {
+            position:relative;
+            display: inline-block;
+            margin-right: 1em;
+            padding-left: 1em;
+
+            &:before {
+                content:"i";
+                position:absolute; left:3px; top:0; margin-top: -1.1em;
+                width:1.2em; height:1.2em;
+                padding: .1em;
+                font-size: 0.8em;
+                font-weight:bold;
+                font-style:italic;
+                text-align:center;
+                color: rgba(#000, .5);;
+                background:#fff;
+                border-radius:50px;
+            }
+        }
+    }
+}
+
+// 应用头部
+.app-header {
+    noflex();
+    position: relative; z-index:3;
+    width:100%;
+    background: #262626;
+    color: #fff;
+    .app-title {
+        margin: 0;
+        padding: 0.5em 0;
+        text-align: center;
+        font-size: 3.2rem;
+    }
+    .app-button {
+        position: absolute; top:0;
+        display: block; min-width: 3em; height:100%;
+        font-size: 3.2rem;
+        padding: .5em 0;
+        background: none; color:#fff;
+        vertical-align: middle;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(200, 200, 200, 0.1);
+        i {vertical-align:middle;}
+        span {padding: 0 .2em; vertical-align:middle;}
+        &:last-of-type {padding-right:$basePadding; text-align:right; left:auto; right:0;}
+        &:first-of-type {padding-left:$basePadding; text-align:left; left:0; right:auto;}
+    }
+
+}
+
+// 隐藏标题栏
+.hide-title {
+    .app-header {display:none;}
+}
+
+// 应用中间内容
+.app-content {
+    flex();
+    position: relative; z-index: 0;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling : touch
+}
+//大屏
+@media all and (min-width:1024px) {
+    html {background: #f2f2f2;}
+    body {
+        position: relative;
+        max-width: 640px; margin: 0 auto; overflow-x:hidden;
+    }
+    .app-page {max-width: 640px; overflow-x:hidden;}
+}
+
+// 应用脚部
+.app-footer {
+    position: relative; z-index:1;
+    width: 100%;
+    text-align:center;
+    noflex();
+    flex-layout();
+    a {
+        flex();
+    }
+    a:last-child {margin:0;}
+    a.current {
+        background: $baseBlue; color: #fff;
+        i {color: @color;}
+    }
+    .app-button {
+        min-width: 33%;
+        font-size: 3rem;
+        padding: .8em 0;
+        margin-right:1px;
+        line-height: 1;
+        background: #fff; color: #3F3F3F;
+
+        i {margin-right: 0.2em;}
+        span {vertical-align:middle;}
+    }
+}
+
+// ============== 页面切换动画 begin =======================
+
+// 正常状态
+.app-page {
+    //transform: translate3d(0, 0, 0);
+    opacity: 1;
+    z-index: 1;
+}
+// 上一页，主角在底层
+.app-direction-prev {
+    .app-page-active {
+        animation-name: fadeInLeft;
+        z-index: 0;
+        &+.app-page {
+            animation-name: fadeOutRight;
+            .app-header a {display:none;}
+            //box-shadow: -5px 0 15px 0 rgba(200, 200, 200, .4);
+        }
+    }
+}
+// 下一页，主角在顶层
+.app-direction-next {
+    .app-page-active {
+        animation-name: fadeInRight;
+        z-index: 2;
+        //box-shadow: -5px 0 15px 0 rgba(200, 200, 200, .4);
+        &+.app-page {
+            animation-name: fadeOutLeft;
+        }
+    }
+}
+
+// 加上这个class才有动画
+.app-animated {
+    animation-duration: 0.35s;
+    //animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+
+    // 防止透明度转换的时候出现白块
+    .app-header:after {
+        content: ' ';
+        display: block;
+        position: absolute; z-index: -1; top:0; left:-100%; right: -100%;
+        background: #262626;
+        height: 100%;
+    }
+}
+
+/**************
+ * 应用消息
+ **************/
+.pop-up{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background-color: rgba(4,20,42,0.3);
+    .text-blue{
+        color:#3cbaff;
+    }
+    h2{
+      padding-top:gap24;
+    }
+    p{
+        padding-top:17px;
+        padding-bottom:17px;
+    }
+    footer{
+        border-top:1px solid #dce1e8;
+        height:45px;
+        line-height:45px;
+    }
+    article{
+        position: absolute;
+        width: 248px;
+        left: 50%;
+        margin-left: -124px;
+        text-align: center;
+        background-color: #fff;
+        top: 50%;
+        margin-top: -40px;
+        border-radius: 6px;
+    }
+}
+.app-msg {
+    position: fixed; z-index:10000; top:0; left:0; right:0;bottom:0;
+    text-align: center;
+    .app-msg-info {}
+    .app-msg-error {}
+}
+
+/*云之家新loading样式*/
+.app-msg-box {
+    display: inline-block;
+    background-color: rgba(0,0,0,0.7);
+    color: #fff;
+    text-align: left;
+    width: 80px;
+    height: 85px;
+}
+.app-msg-loading {
+    padding: 12px;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -60px;
+    margin-left: -40px;
+    .spinner {
+        font-size: 24px;
+        width: 39px;
+        height: 39px;
+        border-radius: 50%;
+        margin: auto;
+        i {
+            position: absolute;
+            width: 39px;
+            height: 39px;
+        }
+        i:after {
+            position: absolute;
+            width: 39px;
+            height: 39px;
+            content: '';
+            -webkit-animation: spinner-circle 1s ease-in-out infinite;
+            animation: spinner-circle 1s linear infinite;
+            border-radius: 50%;
+            
+            background-size: 39px;
+        }
+    }
+    .loading{
+        text-align: center;
+        font-size: 10px;
+        margin-top: 9px;
+    }
+}
+
+@keyframes spinner-circle {
+    0% {transform: rotate(-180deg);}
+    100% {transform: rotate(180deg);}
+}
+
+
+
+
+    .table {
+        color: #8E8E8E;
+        td,th {border: $border; padding: 5px;}
+        th {background: #F1F1F1;}
+    }
+
+    // 文章样式
+    .article {
+        padding: 1em;
+        h2,h3 {margin: 1em 0 .8em;}
+        p {margin:.5em 0; text-indent:2em; line-height:1.6;}
+    }
+
+    .padding {padding: $basePadding;}
+
+    // 列表
+    .ui-list {
+        //padding: $basePadding 0;
+        font-size: 2.8rem;
+        &>li, &>a, .item {
+            position:relative;
+            flex-layout()
+            box-pack: justify;
+            background: #fff; 
+            color:$baseBlack;
+            &>span {
+                flex()
+            }
+            i {color:#737373;}
+            -webkit-tap-highlight-color: rgba(250, 250, 250, 0.5);
+        }
+        &>a{
+            padding: 11px 12px;
+        }
+    }
+
+    .ui-menu {
+        @extend .ui-list
+        
+        //padding: 1px 0;
+        margin:  gap16 0;
+        a {
+            border-bottom:$border;
+            &:first-child {border-top:$border;}
+        }
+    }
+
+
+
+    // 表单
+    ::-webkit-input-placeholder {color:#c9c9c9}
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="password"],
+    input[type="file"],
+    select,
+    textarea {
+        //border: 1px solid transparent;
+        -webket-tap-highlight-color: transparent;
+        padding: 0 .4em;
+        background: #fff;
+    /*&:focus {
+        //border: 1px solid #4d90fe;
+        box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+        //transition: border-color 0.1s ease-in 0.1s;
+        }*/
+        &:focus::-webkit-input-placeholder {color:#e9e9e9}
+        &[disabled] {
+            background: #e0e0e0;
+            color: #aaa;
+        }
+    }
+    input[type="date"] {
+        &::-webkit-inner-spin-button {display:none;}
+        &::-webkit-clear-button {display:none;}
+        &::-webkit-datetime-edit {}
+        -webkit-appearance: none;
+    }
+
+    input[type="file"] {
+        &::-webkit-file-upload-button {height:100%;}
+    }
+
+    input[type="number"] {
+        &::-webkit-inner-spin-button {display:none}
+    }
+
+    .select {
+        position: relative;
+        select {-webkit-appearance: textfield; width:100%}
+        &:after {
+            content: "\e60b"; font-family: icomoon;
+            position: absolute; right: .3em; top: 50%; margin-top:-.5em;
+            //margin-top:-1em; margin-left:-2em;
+        }
+    }
+    .select2 {
+        position: relative;
+        select {
+            padding-right: 1em;
+        }
+        &:after {
+            content: "\e60b"; font-family: icomoon;
+            position: absolute; right: 0; top: 50%; margin-top:-.5em;
+        }
+    }
+    
+
+
+    .checkbox {
+        position: relative;
+        padding-left: 1.4em;
+        height: 1em;
+        line-height: 1;
+        input[type="checkbox"] {
+            position: absolute; left:0; top:50%; margin-top: -.6em;
+            width: 100%; height: 1.2em;
+            background: transparent;
+            display: block;
+            border: 0;
+            cursor: pointer;
+            -webkit-appearance: none;
+            &:before {
+                display: table;
+                width: 1em;
+                height: 1em;
+                margin-top:1px;
+                border-width: 1px;
+                border-style: solid;
+                border-color: $baseBlue;
+                //border-radius: 28px;
+                background: #fff;
+                content: ' ';
+                transition: background-color 20ms ease-in-out;
+            }
+            &:after {
+                transition: opacity 0.05s ease-in-out;
+                transform: rotate(-45deg);
+                position: absolute;
+                top: 4px;
+                left: 3px;
+                display: table;
+                width: 10px;
+                height: 5px;
+                border: 2px solid #fff;
+                border-top: 0;
+                border-right: 0;
+                content: ' ';
+                opacity: 0;
+            }
+            &:checked {
+                &:before {
+                    background: $baseBlue;
+                }
+                &:after {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    .radio{
+        position: relative;
+        padding-left: 1.4em;
+        height: 1em;
+        line-height: 1;
+        input[type="radio"]{
+            position: absolute;
+            left: 0;
+            top: 50%;
+            margin-top: -10px;
+            width: 100%;
+            height: 1.2em;
+            background: transparent;
+            display: block;
+            border: 0;
+            cursor: pointer;
+            -webkit-appearance: none;
+            &:before{
+                display: table;
+                width: 20px;
+                height: 20px;
+                margin-top: 1px;
+                content: ' ';
+                background: url('../img/Staffloan/radio-checkbox.png') no-repeat left top;
+            }
+            &:checked {
+                &:before {
+                    background-position: right top;
+                }
+            }
+        }
+    }
+    
+
+    .ui-form {
+        //padding: 0 $basePadding;
+        font-size: 2.8rem;
+        margin: 1em $basePadding $basePadding;
+        p {margin:.6em 0;}
+        .form-item, .form-item-sttic {
+            margin: 1px (- $basePadding) 0;
+            padding: 0 $basePadding;
+        }
+        fieldset {
+            margin: 0 (- $basePadding);
+            padding: 0 $basePadding;
+        }
+    }
+
+    .form-msg {
+        position: fixed; z-index:100001; width: 100%; left:0; top:0; margin-top:3.2rem;
+        text-align:center;
+        //background: rgba(lighten(#F3811F, 70%), .8); color: #c00;
+        background: rgba(#c00, .7); color:#fff;
+        line-height: 2; font-size: 3rem;
+    }
+
+    .hide-title {
+        .form-msg {margin-top:0;}
+    }
+
+    .form-group {
+        margin-bottom: 1em;
+    }
+
+    .form-item {
+        flex-layout();
+        background: #fff; color: #666;
+        height: 3.2em;
+        box-shadow:0 1px 1px #ddd;
+    /*&:before {
+        content: '';
+        display:block; width:100%; height:1px; margin-top:-1px; margin-left:-1em;
+        position:absolute;
+        background: #f2f2f2;
+        }*/
+
+        label,input,select,button,img {margin:0; line-height:1; height: 3.2em;}
+        label:first-child {
+            display: inline-block;
+            padding: 0 .4em 0 0;
+            min-width:6.5em;
+            line-height: 3.2em;
+            &+div,&+p {
+                //margin: -1px 0;
+                margin: 0;
+                padding-left: .4em;
+                flex();
+            }
+            &+input, &+select {
+                flex();
+            }
+        }
+        select,input{
+            display:flex;
+            width:100%;
+        }
+        &>div {
+            input {width:100%;}
+        }
+        i:first-child {
+            font-size:1.2em;
+            margin-right: .5em;
+            &+input {
+                flex();
+            }
+        }
+        button {
+            margin-right: (- $basePadding);
+            background: #D3EDFB; color: #33B5E5;
+            min-width: 5em;
+            padding:0 1em; line-height:1;
+            white-space: nowrap;
+            &:active {background: darken(@background, 5%);}
+            &[disabled] {background:#D5D5D5; color:#7E7D7D;}
+        }
+        .btn-getcode {
+            min-width:7em;background:none;color:#4fa7f5;
+            text-align: right;
+            &[disabled] {background:none; color:#aaa}
+            &:active {background:none;}
+        }
+
+        i.error,.icon-loading,.icon-success {
+            //position: absolute; z-index:1; right:1em; margin-top:-.5em;
+        }
+        i.error {color:#c00;}
+        .icon-loading,.icon-success {color:transparent;}
+        .icon-success {color: #599933;}
+    }
+
+    .form-item-active {
+        i:first-child[class|="icon"] {color:$baseBlue}
+    }
+
+    .form-item-static {
+        background: #f0f0f0;
+    }
+
+    .form-btn {
+        margin-top: 1.5em; margin-bottom:1em;
+        flex-layout();
+    }
+
+    .btn {
+        //-webkit-appearance: button;
+        display: block;
+        height: 2.2em; line-height: 2.2em;
+        padding: 0 1em; margin: .5rem;
+        border: none;
+        font-size: 4rem;
+        text-align: center;
+        border-radius: 3px;
+        &:first-child {margin-left:0}
+        &:last-child {margin-right:0}
+        &[disabled] {background:#D5D5D5; color:#7E7D7D;}
+    }
+    .btn-primary {
+        @extend .btn
+        background: #F7AB00;
+        color: #fff !important;
+        &:active {background: #D75D03;}
+    }
+    .btn-minor {
+        @extend .btn
+        background: $baseBlue
+        color: #fff !important;
+        &:active {background: darken(@background, 10%);}
+    }
+    .btn-success {
+        @extend .btn
+        background: $baseBlue
+        color: #fff;
+        &:active {background: darken(@background, 10%);}
+    }
+    .btn-blue {
+        @extend .btn
+        background: $baseBlue; color: #fff;
+        &:active {background: darken(@background, 10%);}
+    }
+    .btn-white {
+        @extend .btn
+        height: 1.6em; line-height:1.6em; padding: 0 .4em;
+        font-size: 3.2rem;
+        background: #fff; color: $baseBlue;
+        &:active {background:#f0f0f0;}
+    }
+    .btn-block {display:block; width:100%;}
+
+
+    .waiting {
+        text-indent: -10000px;
+    }
+    .waiting:before {
+        position: absolute; left:0; right:0;
+        text-align: center;
+        content: attr(data-loading);
+        text-indent: 0;
+        letter-spacing: 0;
+    }

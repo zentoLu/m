@@ -1,0 +1,145 @@
+/*! util */
+@require 'mixins';
+
+// 浮动
+.fl {float:left;_display:inline;}
+.fr {float:right;_display:inline;}
+
+// 清除浮动
+.clearfix {
+    clearfix()
+}
+
+// 内容区域居中
+.center-block {
+    display:block; margin-left:auto; margin-right:auto;
+}
+.inline-block {
+    display: inline-block; *display: inline; *zoom: 1;
+}
+
+// 隐藏
+.hide,.hidden {display: none !important; visibility: hidden !important;}
+// 隐藏文本
+.hide-text {font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0}
+// 不可见，但不影响屏幕阅读器
+.invisible {visibility: hidden}
+
+.relative {position:relative}
+
+// 伸缩盒
+.flex-layout {
+    flex-layout()
+}
+.flex-vertical {
+    flex-vertical()
+}
+.flex {
+    flex()
+}
+.noflex {
+    noflex()
+}
+
+.new-flex-layout{
+	new-flex-layout();
+}
+
+.new-flex{
+	new-flex();
+}
+
+// ======= 文本排版 ========
+
+.tal,.text-left {text-align: left}
+.tar,.text-right {text-align: right}
+.tac,.text-center {text-align: center}
+.vat {vertical-align: top}
+.vam {vertical-align: middle}
+
+.bold {font-weight: bold}
+.normal {font-weight: normal; font-style: normal}
+
+.fs20 {font-size: 2.0rem} //10px
+.fs24 {font-size: 2.4rem} //12px
+.fs28 {font-size: 2.8rem} //14px
+.fs30 {font-size: 3.0rem} //15px
+.fs32 {font-size: 3.2rem} //16px
+.fs36 {font-size: 3.6rem} //18px
+.fs40 {font-size: 4.0rem}
+.fs44 {font-size: 4.4rem}
+.fs48 {font-size: 4.8rem}
+.fs60 {font-size: 6.0rem}
+.fs72 {font-size: 7.2rem}
+.fs84 {font-size: 8.4rem}
+.fs96 {font-size: 9.6rem}
+
+.lh100 {line-height: 1}
+.lh120 {line-height: 1.2}
+.lh150 {line-height: 1.5}
+.lh180 {line-height: 1.8}
+.lh200 {line-height: 2}
+
+/*字体大小常用类*/
+.text-lighter{
+    color: $text-lighter;
+}
+.text-blue-light{
+    color: $blue-light;
+}
+.text-light{
+    color: #9a9a9a;
+}
+.text-black{
+    color: #3f3f3f;
+}
+.text-red{
+    color: $red;
+}
+.text-gray{
+    color: #676767;
+}
+.em8{
+    width:8em;
+}
+.em7{
+    width:7em;
+}
+.em6{
+    width:7em;
+}
+
+/*按钮和可点击区域的蒙版*/
+.btn-mask{
+    position:relative;
+    overflow:hidden;
+}
+
+.btn-mask:active:after{
+    content:'';
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index: 1;
+    background: rgba(0,0,0,0.1);
+}
+
+.li-mask{
+    position:relative;
+}
+
+.li-mask:active:after{
+    content:'';
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index: 1;
+    background: rgba(0,0,0,0.1);
+}
+.flex-center{
+    flex-center()
+}

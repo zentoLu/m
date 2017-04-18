@@ -1,0 +1,61 @@
+//清除浮动
+clearfix() {
+    *zoom: 1;
+    &:before, &:after{display:table;content:""}
+    &:after{clear:both}
+}
+
+// 省略
+ellipsis() {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+// 文字自动换行
+break-word() {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+// 伸缩盒
+
+flex-layout($direction=null) {
+    display:-webkit-box;
+    display:-moz-box;
+    -moz-box-align:center;
+    -webkit-box-align:center;
+    if ($direction == vertical) {
+        flex-vertical()
+    }
+}
+
+flex-vertical() {
+    -moz-box-orient: vertical;
+    -webkit-box-orient: vertical;
+    height: 100%;
+}
+
+flex() {
+    display: block;
+    $n = length(arguments) == 0 ? 1 : arguments
+    -webkit-box-flex: $n;
+       -moz-box-flex: $n;
+            box-flex: $n;
+}
+
+noflex() {
+    -webkit-box-flex: 0 !important;
+}
+
+//伸缩盒（新）
+new-flex-layout(){
+    display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;  
+}
+
+new-flex(){
+    -webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;
+}
+
+flex-center(){
+    display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
+    -webkit-box-pack: center;-webkit-justify-content: center;-ms-flex-pack: center;justify-content: center;    
+}
