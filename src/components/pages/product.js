@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from '../Head';
 import Foot from '../Foot';
+import $ from 'n-zepto';
 //import { Link }  from 'react-router';
 export default  class product extends React.Component {
 	constructor(props) {
