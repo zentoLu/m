@@ -1,6 +1,6 @@
 import React from 'react';
-import Head from './Head';
-import Foot from './Foot';
+import Head from '../Head';
+import Foot from '../Foot';
 import { Link }  from 'react-router';
 
 export default   class Topics extends React.Component {
@@ -12,11 +12,9 @@ export default   class Topics extends React.Component {
 					<div>
 						<Link to="/about" > about</Link>
 					    <h2>Topics</h2>
-					    
 					</div>
 				</div>
    				<Foot  />
-
    		  	</div>
 	   );
 	}
