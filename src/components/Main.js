@@ -1,6 +1,7 @@
 import About from './pages/about';
 import Topics from './pages/topics';
 import Product from './pages/product';
+import Material from './pages/material';
 import $ from 'n-zepto';
 import React from 'react';
 import Home from './Home';
@@ -225,6 +226,7 @@ class AppComponent extends React.Component {
                     <Route path="/about" component={About}/>
                     <Route path="/topics" component={Topics}/>
                     <Route path="/product" component={Product}/>
+                    <Route path="/material" component={Material}/>
                 </Route>
             </Router>
         )
