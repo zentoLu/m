@@ -2,6 +2,8 @@ import About from './pages/about';
 import Topics from './pages/topics';
 import Product from './pages/product';
 import Material from './pages/material';
+import Sign from './pages/sign';
+import Approve from './pages/approve';
 import $ from 'n-zepto';
 import React from 'react';
 import Home from './Home';
@@ -227,6 +229,8 @@ class AppComponent extends React.Component {
                     <Route path="/topics" component={Topics}/>
                     <Route path="/product" component={Product}/>
                     <Route path="/material" component={Material}/>
+                    <Route path="/sign" component={Sign}/>
+                    <Route path="/approve" component={Approve}/>
                 </Route>
             </Router>
         )
