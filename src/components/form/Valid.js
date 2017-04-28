@@ -3,6 +3,7 @@ const trim = function(str){ //删除左右两端的空格
 　　 }
 const rules = {
     digits: [/^\d+$/, '请输入数字'],
+    mobile: [/^1[3-9]\d{9}$/, '请输入有效的手机号'],
     email: [/^[\w\+\-]+(\.[\w\+\-]+)*@[a-z\d\-]+(\.[a-z\d\-]+)*\.([a-z]{2,4})$/i, '请输入有效的邮箱'],
     chinese: [/^[\u0391-\uFFE5]+$/, '请输入中文字符'],
     password: [/^[\S]{6,16}$/, '请输入6-16位字符，不能包含空格'],
@@ -108,7 +109,11 @@ const valid = function(value, rule) {
                         }
                     //自定义正则规则
                     }else if( /^\//.test(curRule) ) {
-                        var cReg = new RegExp(curRule);
+                        var inputstring = curRule;
+                        var flags = inputstring.replace(/.*\/([gimy]*)$/, '$1');
+                        var pattern = inputstring.replace(new RegExp('^/(.*?)/'+flags+'$'), '$1');
+                        var cReg = new RegExp(pattern, flags);
+                        //console.log(curRule, value);
                         if(!cReg.test(value)) {
                             //me.focusOnError($cur);
                             return false;

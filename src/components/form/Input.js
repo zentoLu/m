@@ -5,7 +5,6 @@ export default  class Input extends React.Component {
 	constructor(props) {
 	    super(props);
 	    this.handleChange = this.handleChange.bind(this);
-
 	}
 
 	handleChange(e) {
@@ -34,7 +33,7 @@ export default  class Input extends React.Component {
 				<div className={'name-box list-item item-'+it.name}>
 		            <div className="content" htmlFor={it.name}>
 		                <label className={'label mr1 label-'+it.name}>{it.cnName}</label>
-		                <input onChange={this.handleChange} value={value} type="text" name={it.name}
+		                <input  ref={it.inputRef}  onChange={this.handleChange} value={value} type="text" name={it.name}
 		                placeholder={'请输入'+it.cnName} id={it.name} className={'text-black '+it.name} />
 		            </div>
 		        </div>

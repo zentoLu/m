@@ -1,6 +1,5 @@
 import React from 'react';
 export default  class Msg extends React.Component {
-
 	render() {
 		return (
 			<div className="msg-box">
@@ -9,5 +8,4 @@ export default  class Msg extends React.Component {
 			</div>
 		);
 	}
-  		
 }

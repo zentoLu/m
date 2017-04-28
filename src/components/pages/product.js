@@ -48,6 +48,9 @@ export default  class product extends React.Component {
 		    });
 		    
 		}.bind(this));
+		$.ajaxPost('/front/indexNotLogin.do?action=getProductSJ', function(d) {
+			console.log(d);
+		});
 	}
 	render() {
 	   return (

@@ -8,7 +8,7 @@ export default  class Sign extends React.Component {
 			<div className="transition-item p-animate material page-sign">
 				<Head title="签约" />
 				<div className="app-content">
-					<Step />
+					<Step n="2" />
 					<section className="middle-content">
 						<h2>亲爱的韦小宝：</h2>
 						<div>请确认您的贷款信息。</div>
